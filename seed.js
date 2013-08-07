@@ -1,22 +1,24 @@
 var fs = require("fs");
 var tele = require("telehash");
+var argv = require("optimist")
+  .usage("Usage: $0 nameofnetwork")
+  .default("id", "./seed.json")
+  .default("port", 42424)
+  .boolean("v").describe("v", "verbose")
+  .demand(1).argv;
 
-var network = process.argv[2];
-var port = parseInt(process.argv[3] || 42424);
+if(argv.v) tele.debug(console.log);
 
-if(!network)
-{
-  console.log("first argument is the name of the network to seed for");
-  process.exit(1);
-}
+var network = argv._[0].toString();
+var port = parseInt(argv.port);
 
 // load the pub/private key or create one
-if(fs.existsSync("./seed.json"))
+if(fs.existsSync(argv.id))
 {
-  init(require("./seed.json"));
+  init(require(argv.id));
 }else{
   tele.genkey(function(err, key){
-    fs.writeFileSync("./seed.json", JSON.stringify(key, null, 4));
+    fs.writeFileSync(argv.id, JSON.stringify(key, null, 4));
     init(key);
   });
 }
