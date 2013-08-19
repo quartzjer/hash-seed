@@ -1,9 +1,9 @@
 hash-seed
 =======
 
-A minimal [telehash](http://telehash.org) seed for any network.
+A minimal [telehash](http://telehash.org) seed.
 
 ```
 npm install
-node seed.js "foo.org"
+node seed.js
 ```
