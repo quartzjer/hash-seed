@@ -17,7 +17,7 @@ if(fs.existsSync(argv.id))
 }else{
   tele.genkey(function(err, key){
     fs.writeFileSync(argv.id, JSON.stringify(key, null, 4));
-    init(key, mesh);
+    init(key);
   });
 }
 
